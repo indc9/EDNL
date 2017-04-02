@@ -2,10 +2,10 @@
 #define ABIN_H
 #include <cassert>
 
-//Representaci�n enlazada
+//Representación dinámica
 
 template <typename T> class Abin {
-    struct celda; // declaraci�n adelantada privada
+    struct celda; // declaración adelantada privada
 public:
     typedef celda* nodo;
     static const nodo NODO_NULO;
@@ -25,7 +25,7 @@ public:
     nodo hijoIzqdoB(nodo n) const;
     nodo hijoDrchoB(nodo n) const;
     Abin(const Abin<T>& a); // ctor. de copia
-    Abin<T>& operator =(const Abin<T>& a); //asignaci�n de �rboles
+    Abin<T>& operator =(const Abin<T>& a); //asignación de árboles
 
     //Ejercicio 5
     int profundidad_nodo(nodo n) const;
@@ -37,13 +37,13 @@ private:
         celda(const T& e, nodo p = NODO_NULO): elto(e),
             padre(p), hizq(NODO_NULO), hder(NODO_NULO) {}
     };
-    nodo r; // nodo ra�z del �rbol
+    nodo r; // nodo raíz del árbol
 
     void destruirNodos(nodo& n);
     nodo copiar(nodo n);
 };
 
-/* Definici�n del nodo nulo */
+/* Definición del nodo nulo */
 template <typename T>
 const typename Abin<T>::nodo Abin<T>::NODO_NULO(0);
 
@@ -53,7 +53,7 @@ inline Abin<T>::Abin() : r(NODO_NULO) {}
 template <typename T>
 inline void Abin<T>::insertarRaizB (const T& e)
 {
-    assert(r == NODO_NULO);     // �rbol vac�o
+    assert(r == NODO_NULO);     // árbol vacío
     r = new celda(e);
 }
 
@@ -99,16 +99,16 @@ inline void Abin<T>::eliminarHijoDrchoB(Abin<T>::nodo n)
 template <typename T>
 inline void Abin<T>::eliminarRaizB()
 {
-    assert(r != NODO_NULO); // �rbol no vac�o
+    assert(r != NODO_NULO); // árbol no vacío
     assert(r->hizq == NODO_NULO &&
-        r->hder == NODO_NULO); // la ra�z es hoja
+        r->hder == NODO_NULO); // la raíz es hoja
     delete(r);
     r = NODO_NULO;
 }
 
 template <typename T> inline Abin<T>::~Abin()
 {
-    destruirNodos(r); // vac�a el �rbol
+    destruirNodos(r); // vacía el árbol
 }
 
 template <typename T> inline bool Abin<T>::arbolVacioB() const
@@ -164,15 +164,15 @@ inline Abin<T>::Abin(const Abin<T>& a)
 template <typename T>
 Abin<T>& Abin<T>::operator =(const Abin<T>& a)
 {
-    if (this != &a) // evitar autoasignaci�n
+    if (this != &a) // evitar autoasignación
     {
-        this->~Abin(); // vaciar el �rbol
+        this->~Abin(); // vaciar el árbol
         r = copiar(a.r);
     }
     return *this;
 }
 
-// M�todos privados
+// Métodos privados
 
 // Destruye un nodo y todos sus descendientes
 template <typename T>
@@ -195,10 +195,10 @@ typename Abin<T>::nodo Abin<T>::copiar(Abin<T>::nodo n)
     if (n != NODO_NULO)
     {
         m = new celda(n->elto);     // copiar n
-        m->hizq = copiar(n->hizq); // copiar sub�rbol izqdo.
+        m->hizq = copiar(n->hizq); // copiar subárbol izqdo.
         if (m->hizq != NODO_NULO)
             m->hizq->padre = m;
-        m->hder = copiar(n->hder); // copiar sub�rbol drcho.
+        m->hder = copiar(n->hder); // copiar subárbol drcho.
         if (m->hder != NODO_NULO)
             m->hder->padre = m;
     }
